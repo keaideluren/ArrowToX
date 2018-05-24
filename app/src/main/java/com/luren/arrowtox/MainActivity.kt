@@ -35,8 +35,12 @@ class MainActivity : AppCompatActivity() {
         axvt.start()
         val dialog = Dialog(this)
         val completeView = CompleteView(this)
-        completeView.setPadding(50,50,30,50)
+        completeView.setCircleStrokeWidth(5)
+        completeView.setTickStrokeWidth(8)
+
         dialog.setContentView(completeView)
+        dialog.window.attributes.width =250
+        dialog.window.attributes.height =250
         dialog.show()
     }
 }

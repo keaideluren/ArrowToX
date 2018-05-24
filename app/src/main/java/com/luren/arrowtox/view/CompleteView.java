@@ -5,11 +5,11 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -22,6 +22,9 @@ import com.luren.arrowtox.R;
  * TODO
  */
 public class CompleteView extends View {
+
+    private Paint headPaint;
+
     public CompleteView(Context context) {
         super(context);
         init(context, null);
@@ -56,12 +59,29 @@ public class CompleteView extends View {
     private Paint tickPaint;
     private Paint circlePaint;
 
+    public void setCircleColor(int circleColor) {
+        this.circleColor = circleColor;
+        tickPaint.setColor(circleColor);
+        circlePaint.setColor(circleColor);
+        headPaint.setColor(circleColor);
+    }
+
+    public void setCircleStrokeWidth(int circleStrokeWidth) {
+        this.circleStrokeWidth = circleStrokeWidth;
+        circlePaint.setStrokeWidth(circleStrokeWidth);
+    }
+
+    public void setTickStrokeWidth(int tickStrokeWidth) {
+        this.tickStrokeWidth = tickStrokeWidth;
+        tickPaint.setStrokeWidth(tickStrokeWidth);
+    }
+
     public void init(Context context, AttributeSet attrs) {
 
         TypedArray mTypedArray = context.obtainStyledAttributes(attrs, R.styleable.CompleteView);
-        circleColor = mTypedArray.getColor(R.styleable.CompleteView_circleViewColor, ContextCompat.getColor(context, R.color.colorPrimary));
+        circleColor = mTypedArray.getColor(R.styleable.CompleteView_circleViewColor, Color.parseColor("#489EFB"));
         circleStrokeWidth = mTypedArray.getInteger(R.styleable.CompleteView_circleStrokeWidth, 20);
-        tickStrokeWidth = mTypedArray.getInteger(R.styleable.CompleteView_circleTickWidth, 20);
+        tickStrokeWidth = mTypedArray.getInteger(R.styleable.CompleteView_circleTickWidth, 35);
         mTypedArray.recycle();
 
         tickPaint = new Paint();
@@ -78,6 +98,11 @@ public class CompleteView extends View {
         tickPaint.setAntiAlias(true);
         tickPaint.setColor(circleColor);
         tickPaint.setStrokeWidth(tickStrokeWidth);
+
+        headPaint = new Paint();
+        headPaint.setStyle(Paint.Style.FILL);
+        headPaint.setColor(circleColor);
+        headPaint.setAntiAlias(true);
 
         //打钩动画
         ValueAnimator mTickAnimation;
@@ -135,7 +160,16 @@ public class CompleteView extends View {
          * A simple workaround is to add a single operation to this path, such as dst.rLineTo(0, 0).
          */
         tickPathMeasure.getSegment(0, tickPercent * tickPathMeasure.getLength(), path, true);
+        //钩钩
         canvas.drawPath(path, tickPaint);
+        //钩钩开始位置的圆头
+        if (tickPercent > 0) {
+            canvas.drawCircle(firStartX, firStartY, tickStrokeWidth / 2, headPaint);
+        }
+        //钩结束位置的圆头
+        if (tickPercent == 1) {
+            canvas.drawCircle(secEndX, secEndY, tickStrokeWidth / 2, headPaint);
+        }
         canvas.drawArc(circleStrokeWidth / 2, circleStrokeWidth / 2, circleRadius - circleStrokeWidth / 2
                 , circleRadius - circleStrokeWidth / 2, 0, 360, false, circlePaint);
     }
