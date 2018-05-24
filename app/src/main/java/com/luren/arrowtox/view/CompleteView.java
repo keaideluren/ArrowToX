@@ -105,11 +105,13 @@ public class CompleteView extends View {
 
         int width = canvas.getWidth();
         int height = canvas.getHeight();
+        width -= getPaddingLeft() + getPaddingRight();
+        width -= getPaddingTop() + getPaddingBottom();
 
         if (width > height) {
-            canvas.translate((width - height) / 2, 0);
+            canvas.translate((width - height) / 2 + getPaddingLeft(), 0);
         } else {
-            canvas.translate(0, (height - width) / 2);
+            canvas.translate(0, (height - width) / 2 + getPaddingTop());
         }
         // 根据设置该view的高度，进行对所画图进行居中处理
         float circleRadius = Math.min(height, width);
@@ -134,7 +136,8 @@ public class CompleteView extends View {
          */
         tickPathMeasure.getSegment(0, tickPercent * tickPathMeasure.getLength(), path, true);
         canvas.drawPath(path, tickPaint);
-        canvas.drawArc(0, 0, circleRadius, circleRadius, 0, 360, false, circlePaint);
+        canvas.drawArc(circleStrokeWidth / 2, circleStrokeWidth / 2, circleRadius - circleStrokeWidth / 2
+                , circleRadius - circleStrokeWidth / 2, 0, 360, false, circlePaint);
     }
 
 }
