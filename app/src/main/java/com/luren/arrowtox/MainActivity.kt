@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         axvt.start()
         val dialog = Dialog(this)
         val completeView = CompleteView(this)
+        completeView.setPadding(50,50,30,50)
         dialog.setContentView(completeView)
         dialog.show()
     }

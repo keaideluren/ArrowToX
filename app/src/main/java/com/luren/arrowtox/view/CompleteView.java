@@ -109,9 +109,9 @@ public class CompleteView extends View {
         width -= getPaddingTop() + getPaddingBottom();
 
         if (width > height) {
-            canvas.translate((width - height) / 2 + getPaddingLeft(), 0);
+            canvas.translate((width - height) / 2 + getPaddingLeft(), getPaddingTop());
         } else {
-            canvas.translate(0, (height - width) / 2 + getPaddingTop());
+            canvas.translate(getPaddingLeft(), (height - width) / 2 + getPaddingTop());
         }
         // 根据设置该view的高度，进行对所画图进行居中处理
         float circleRadius = Math.min(height, width);
