@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CompleteView">
+        <attr name="circleViewColor" format="color" />
+        <attr name="circleStrokeWidth" format="dimension" />
+        <attr name="circleTickWidth" format="dimension" />
+    </declare-styleable>
+</resources>
