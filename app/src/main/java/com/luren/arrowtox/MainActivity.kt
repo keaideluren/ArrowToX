@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         completeView.setTickStrokeWidth(8)
 
         dialog.setContentView(completeView)
-        dialog.window.attributes.width =250
-        dialog.window.attributes.height =250
+        dialog.window.attributes.width = 250
+        dialog.window.attributes.height = 250
         dialog.show()
     }
 }
